@@ -1,0 +1,23 @@
+MAC MAPPING XBOX 360 controller
+
+0: left analog X
+1: left analog Y
+2: right analog X
+3: right analog Y
+4: up
+5: down
+6: left
+7: right
+8: start
+9: back
+10: left stick
+11: right stick
+12: left shoulder
+13: right shoulder
+14: xbox button
+15: A button
+16: B button
+17: X button
+18: Y button
+19: analog left trigger
+20: analog right trigger
