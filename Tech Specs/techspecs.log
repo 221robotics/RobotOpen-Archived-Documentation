@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.3-1.40.12 (TeX Live 2011) (format=pdflatex 2011.7.3)  6 JAN 2012 12:45
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (TeX Live 2011) (format=pdflatex 2011.7.3)  11 JUN 2012 22:28
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -451,7 +451,7 @@ texlive/2011/texmf-dist/fonts/enc/dvips/cantarell/cantarell-fixlatin.enc}</usr/
 local/texlive/2011/texmf-dist/fonts/type1/public/cantarell/Cantarell-Bold.pfb><
 /usr/local/texlive/2011/texmf-dist/fonts/type1/public/cantarell/Cantarell-Regul
 ar.pfb>
-Output written on techspecs.pdf (1 page, 370421 bytes).
+Output written on techspecs.pdf (1 page, 370441 bytes).
 PDF statistics:
  28 PDF objects out of 1000 (max. 8388607)
  18 compressed objects within 1 object stream

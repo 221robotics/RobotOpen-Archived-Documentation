@@ -27,7 +27,7 @@
 %%% HEADERS & FOOTERS
 \usepackage{fancyhdr} % This should be set AFTER setting up the page geometry
 \pagestyle{fancy} % options: empty , plain , fancy
-\lhead{RobotOpen Protocol Spec\\Version 1.0 (Jan 15th, 2012)\\www.RobotOpen.biz}
+\lhead{RobotOpen Protocol Spec\\Version 2.0 (Jun 11th, 2012)\\www.RobotOpen.biz}
 \rhead{\includegraphics[height=42pt]{robotopen.png}}
 \lfoot{}\cfoot{\thepage}\rfoot{}
 \setlength\headsep{30pt}
@@ -79,7 +79,7 @@ Control packets are used for sending control data to a robot from a driver stati
 \end{bytefield}
 \\\\\\
 \textbf{Message Type}: Always 0x01 for control packets.\\\\
-\textbf{Protocol Version}: The version of RobotOpen protocol. Currenly only version 1 exists. This is transmitted as 0x01. If a controller detects a version mismatch it should throw out the packet.\\\\
+\textbf{Protocol Version}: The version of RobotOpen protocol. This documentation is for version 2. This is transmitted as 0x02. If a controller detects a version mismatch it should throw out the packet.\\\\
 \textbf{Device ID}: Used to identify what device is sending control packets (Driver Station app, Android, iPhone, etc...). See the Device ID section at the end of this document.\\\\
 \textbf{Payload}: The actual control data to be sent. This will be in the form of bundles. See the Payload section later in this document. This portion of the packet is variable length.\\\\
 \textbf{CRC-16 High/Low Byte}: A CRC-16 checksum of the entire packet, excluding these CRC-16 bytes. This 16 bit value should be transmitted as 2 bytes. The first byte in the packet is always the high byte, followed by the low byte. If a packet becomes corrupt it should be thrown out.\\
@@ -101,7 +101,7 @@ Query packets are sent from a driver station to a robot controller to request a 
 \end{bytefield}
 \\\\\\
 \textbf{Message Type}: Always 0x03 for query packets.\\\\
-\textbf{Protocol Version}: The version of RobotOpen protocol. Currenly only version 1 exists. This is transmitted as 0x01. If a controller detects a version mismatch it should throw out the packet.\\\\
+\textbf{Protocol Version}: The version of RobotOpen protocol. This documentation is for version 2. This is transmitted as 0x02. If a controller detects a version mismatch it should throw out the packet.\\\\
 \textbf{Device ID}: Used to identify what device is sending query packets (Driver Station app, Android, iPhone, etc...). See the Device ID section at the end of this document.\\\\
 \textbf{CRC-16 High/Low Byte}: A CRC-16 checksum of the entire packet, excluding these CRC-16 bytes. This 16 bit value should be transmitted as 2 bytes. The first byte in the packet is always the high byte, followed by the low byte. If a packet becomes corrupt it should be thrown out.\\
 
@@ -127,7 +127,7 @@ Feedback packets are sent from a robot controller to a driver station. They cont
 \end{bytefield}
 \\\\\\
 \textbf{Message Type}: Always 0x02 for feedback packets.\\\\
-\textbf{Protocol Version}: The version of RobotOpen protocol. Currenly only version 1 exists. This is transmitted as 0x01. If a controller detects a version mismatch it should throw out the packet.\\\\
+\textbf{Protocol Version}: The version of RobotOpen protocol. This documentation is for version 2. This is transmitted as 0x02. If a controller detects a version mismatch it should throw out the packet.\\\\
 \textbf{Device ID}: Used to identify what device is sending the feedback packet (Arduino, Computer, etc...). See the Device ID section at the end of this document.\\\\
 \textbf{Firmware Version}: Used for identifying the version of your control code loaded onto a robot. This will typically be user provided. Values can range from 0x00 to 0xFF.\\\\
 \textbf{Controller State}: The state of your robot (enabled or disabled). If the robot is disabled it should return 0x00. If it is enabled it should return 0xFF.\\\\
@@ -137,7 +137,6 @@ Feedback packets are sent from a robot controller to a driver station. They cont
 \textbf{Payload}: Any additional feedback data to be sent. This will be in the form of bundles. See the Payload section later in this document. This portion of the packet is variable length.\\\\
 \textbf{CRC-16 High/Low Byte}: A CRC-16 checksum of the entire packet, excluding these CRC-16 bytes. This 16 bit value should be transmitted as 2 bytes. The first byte in the packet is always the high byte, followed by the low byte. If a packet becomes corrupt it should be thrown out.\\
 \newpage
-
 
 \section*{}
 
@@ -162,6 +161,59 @@ The payload of a packet is nothing more than each data bundle one after another.
 \textbf{Bundle ID}: A single ASCII character that identifies this bundle. Although this can be any value between 0x00 and 0xFF, it is encouraged to use printable characters such as 0-9, a-z, or A-Z.\\\\
 \textbf{Variable Length Bundle Bytes}: The actual data. This can be in whatever format is most convenient to you. For joysticks, each byte is a component value (y axis, dpad, button), however the use of this is open ended. ASCII strings could even be sent in a bundle using this portion.\\\\
 As seen in the diagram, each bundle follows one after another. Both the driver station and robot controller will parse out each of these bundles individually.
+\newpage
+
+
+\section*{}
+
+\section{Joystick Bundles}
+\subsection{Joystick (Fixed Format) Payload}
+
+Version 2 of the RobotOpen protocol introduced a fixed format for all joystick devices. This was an effort to standardize the control scheme across the Android, iOS, and desktop driver stations. Starting with version 2 of the protocol, all RobotOpen controllers will expect control data in this format.
+\vspace{30px}
+
+\begin{bytefield}[bitformatting={\small\bfseries},bitwidth=26.0pt]{8}
+\bitheader{0-7} \\
+\bitbox{8}{First Bundle Length  - Always 0x12} & \\
+\bitbox{8}{First Bundle ID - 0x30 for Joystick 1} \\
+\bitbox{8}{Analog Left X Axis (0x00-0xFF)} & \\
+\bitbox{8}{Analog Left Y Axis (0x00-0xFF)} & \\
+\bitbox{8}{Analog Right X Axis (0x00-0xFF)} & \\
+\bitbox{8}{Analog Right Y Axis (0x00-0xFF)} & \\
+\bitbox{8}{Analog Left Button (0x00 or 0xFF)} & \\
+\bitbox{8}{Analog Right Button (0x00 or 0xFF)} & \\
+\bitbox{8}{D-Pad (0x00-0xFF)} & \\
+\bitbox{8}{Button 1 (0x00 or 0xFF)} & \\
+\bitbox{8}{Button 2 (0x00 or 0xFF)} & \\
+\bitbox{8}{Button 3 (0x00 or 0xFF)} & \\
+\bitbox{8}{Button 4 (0x00 or 0xFF)} & \\
+\bitbox{8}{Button 5 (0x00 or 0xFF)} & \\
+\bitbox{8}{Button 6 (0x00 or 0xFF)} & \\
+\bitbox{8}{Button 7 (0x00 or 0xFF)} & \\
+\bitbox{8}{Button 8 (0x00 or 0xFF)} & \\
+\bitbox{8}{Button 9 (0x00 or 0xFF)} & \\
+\bitbox{8}{Button 10 (0x00 or 0xFF)} & \\
+\skippedwords \\
+\wordbox{1}{More joystick data...} \\
+\end{bytefield}
+\\\\\\
+\newpage
+
+\section*{}
+
+\subsection{D-Pad Values}
+0x3F - Up \\
+0x1F - Up Left \\
+0x5F - Up Right \\
+0xBF - Down \\
+0xDF - Down Left \\
+0x9F - Down Right \\
+0xFF - Left \\
+0x7F - Right
+
+\subsection{Multiple Joysticks}
+Note that more joystick data can be added to the packet by simply repeating the same pattern for the next joystick. The next byte would be the bundle length (again - 0x12), followed by the bundle ID. This follows the ASCII format, giving joystick 2 a bundle ID of 0x31.
+
 \newpage
 
 

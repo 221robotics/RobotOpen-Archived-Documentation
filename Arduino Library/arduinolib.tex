@@ -27,7 +27,7 @@
 %%% HEADERS & FOOTERS
 \usepackage{fancyhdr} % This should be set AFTER setting up the page geometry
 \pagestyle{fancy} % options: empty , plain , fancy
-\lhead{RobotOpen Arduino Library Reference\\Version 1.0.x Release\\www.RobotOpen.biz}
+\lhead{RobotOpen Arduino Library Reference\\Version 1.1.x Release\\www.RobotOpen.biz}
 \rhead{\includegraphics[height=42pt]{robotopen.png}}
 \lfoot{}\cfoot{\thepage}\rfoot{}
 \setlength\headsep{30pt}
@@ -39,7 +39,7 @@
 \section{Introduction}
 
 \subsection{Overview}
-The RobotOpen Arduino Library provides an easy to use abstraction layer to quickly begin programming and controlling your robots with RobotOpen. The 1.0.x release is currently compatible with the RobotOpen Control Shield for Arduino coupled with the boards listed below. 
+The RobotOpen Arduino Library provides an easy to use abstraction layer to quickly begin programming and controlling your robots with RobotOpen. The 1.1.x release is currently compatible with the RobotOpen Control Shield for Arduino coupled with the boards listed below. 
 
 \subsection{Supported Hardware}
 
@@ -66,7 +66,7 @@ Before installing the RobotOpen library, first verify that you are running the l
 The Driver Station app is a simple Java application to allow control of your RobotOpen powered robot. This can be obtained from www.robotopen.biz. Please view the getting started video listed on the site to learn more.
 
 \subsection{Examples}
-Now that you have the RobotOpen library loaded up, simply open the Arduino IDE and select File >> Examples >> RobotOpen >> TankDrive. This is the simplest example bunded into the RobotOpen library that shows how you should model your RobotOpen projects. For this example, all of the code is provided to get a basic robot up and running in a Tank Drive configuration. By default, the Logitech Dual Action USB Game Pad will work out of the box. If you will be using a Mac to drive the robot you will need to change LOGITECH\_LEFTY to LOGITECH\_LEFTY\_MAC and LOGITECH\_RIGHTY to LOGITECH\_RIGHTY\_MAC. This is due to the fact that OS X maps USB gamepads differently.
+Now that you have the RobotOpen library loaded up, simply open the Arduino IDE and select File >> Examples >> RobotOpen >> TankDrive. This is the simplest example bunded into the RobotOpen library that shows how you should model your RobotOpen projects. For this example, all of the code is provided to get a basic robot up and running in a Tank Drive configuration. By default, the Logitech Dual Action USB Game Pad will work out of the box.
 
 \newpage
 
@@ -87,7 +87,12 @@ This function notifies RobotOpen that all of the robot code has finished executi
 \textbf{int pwmChannel}: The PWM output to set. See the Digital Sidecar IO Constants near the end of this document for possible values. Example: SIDECAR\_PWM7.\\
 \textbf{int value}: The PWM value to set. Use a joystick makePWM function here or manually pass a value between 0-255.\\
 \textbf{Returns: void}\\\\
-This function sets a motor or PWM value on a specific PWM output of the digital sidecar. 
+This function sets a motor or PWM value on a specific PWM output of the digital sidecar.
+\subsection{RobotOpen::setRelay(int relayChannel, int value)}
+\textbf{int relayChannel}: The relay output to set. See the Constants section near the end of this document for possible values. Example: RELAY\_3.\\
+\textbf{int value}: The relay value to set. Possible values here are either ON or OFF.\\
+\textbf{Returns: void}\\\\
+This function sets a motor or PWM value on a specific PWM output of the digital sidecar.
 \subsection{RobotOpen::enabled()}
 \textbf{Returns: boolean}\\\\
 This will return to you a boolean of the current state of the robot. True corresponds to enabled. False corresponds to disabled.
@@ -107,12 +112,14 @@ This method measures a digital sidecar pin state (0vdc or 5vdc) and sends it bac
 \textbf{unsigned char bundleID}: A unique single character that identifies this bundle. This should be passed in single quotes. Typical values include 0-9, a-z, and A-Z.\\
 \textbf{Returns: void}\\\\
 This method sends a single byte back to the driver station. The bundleID is simply a method to identify the data "bundle" on your driver station.
+
+\newpage
+
 \subsection{RobotOpen::publishInt(unsigned int value, unsigned char bundleID)}
 \textbf{unsigned int value}: The int (16 bit) value that you would like to send back to the DS.\\
 \textbf{unsigned char bundleID}: A unique single character that identifies this bundle. This should be passed in single quotes. Typical values include 0-9, a-z, and A-Z.\\
 \textbf{Returns: void}\\\\
 This method sends a single int back to the driver station. The bundleID is simply a method to identify the data "bundle" on your driver station.
-\newpage
 \subsection{RobotOpen::publishLong(long value, unsigned char bundleID)}
 \textbf{long value}: The long (32 bit) value that you would like to send back to the DS.\\
 \textbf{unsigned char bundleID}: A unique single character that identifies this bundle. This should be passed in single quotes. Typical values include 0-9, a-z, and A-Z.\\
@@ -141,15 +148,14 @@ This function allows you to grab the raw value of any component in this USBJoyst
 \textbf{char mode}: How to generate the PWM value (INVERT or NORMAL)\\
 \textbf{Returns: int}\\\\
 This function will return a PWM value between 0-255 if the joystick axis/component you pass is valid or 127 (neutral) if there is an error. You will normally use this function chained with a setPWM function such as:\\
-RobotOpen::setPWM(SIDECAR\_PWM9, usb1.makePWM(LOGITECH\_LEFTY, NORMAL));
+RobotOpen::setPWM(SIDECAR\_PWM9, usb1.makePWM(ANALOG\_LEFTY, NORMAL));
 \subsection{joystick.getBtn(int index, char mode)}
 \textbf{int index}: The joystick button to read. See Logitech Gamepad Constants below. A raw joystick index can also be passed in here.\\
 \textbf{char mode}: How to generate the returned boolean (INVERT or NORMAL)\\
 \textbf{Returns: boolean}\\\\
 This function will return true if the specified button is being pressed or false if it is not being pressed (if the mode is NORMAL). The opposite holds true if the mode is INVERT.
-\subsection{joystick.getDpad(int index, unsigned char position, char mode)}
-\textbf{int index}: The D-Pad component. See Logitech Gamepad Constants below. This will typically be LOGITECH\_DPAD or LOGITECH\_DPAD\_MAC\\
-\textbf{unsigned char position}: The position of the D-Pad to check against (e.g. UP\_RIGHT).\\
+\subsection{joystick.getDpad(unsigned char compare, char mode)}
+\textbf{unsigned char compare}: The position of the D-Pad to check against (e.g. UP\_RIGHT).\\
 \textbf{char mode}: How to generate the returned boolean (INVERT or NORMAL)\\
 \textbf{Returns: boolean}\\\\
 This function will return true if the specified d-pad direction is being pressed or false if it is not being pressed (if the mode is NORMAL). The opposite holds true if the mode is INVERT.
@@ -192,73 +198,43 @@ This function will return true if the specified d-pad direction is being pressed
 
 \newpage
 
-\subsection{Logitech Gamepad on Windows DS}
+\subsection{Relay Outputs}
 
 \begin{itemize}
-\item LOGITECH\_RIGHTY - 0x00
-\item LOGITECH\_RIGHTX - 0x01
-\item LOGITECH\_LEFTY - 0x02
-\item LOGITECH\_LEFTX - 0x03
-\item LOGITECH\_DPAD - 0x04
-\item LOGITECH\_BTN1 - 0x05
-\item LOGITECH\_BTN2 - 0x06
-\item LOGITECH\_BTN3 - 0x07
-\item LOGITECH\_BTN4 - 0x08
-\item LOGITECH\_BTN5 - 0x09
-\item LOGITECH\_BTN6 - 0x0a
-\item LOGITECH\_BTN7 - 0x0b
-\item LOGITECH\_BTN8 - 0x0c
-\item LOGITECH\_BTN9 - 0x0d
-\item LOGITECH\_BTN10 - 0x0e
-\item LOGITECH\_LEFTBTN - 0x0f
-\item LOGITECH\_RIGHTBTN - 0x10
+\item RELAY\_1 - 0x01
+\item RELAY\_2 - 0x02
+\item RELAY\_3 - 0x03
+\item RELAY\_4 - 0x04
+\item RELAY\_5 - 0x05
+\item RELAY\_6 - 0x06
+\item RELAY\_7 - 0x07
+\item RELAY\_8 - 0x08
+\item RELAY\_9 - 0x09
+\item RELAY\_10 - 0x0a
 \end{itemize}
 
 \newpage
 
-\subsection{Xbox 360 Controller on Windows DS}
+\subsection{Joystick Identifiers}
 
 \begin{itemize}
-\item XBOX\_LEFTY - 0x00
-\item XBOX\_LEFYX - 0x01
-\item XBOX\_RIGHTY - 0x02
-\item XBOX\_RIGHTX - 0x03
-\item XBOX\_TRIGGERS - 0x04 (NOTE: This is Analog)
-\item XBOX\_A\_BTN - 0x05
-\item XBOX\_B\_BTN - 0x06
-\item XBOX\_X\_BTN - 0x07
-\item XBOX\_Y\_BTN - 0x08
-\item XBOX\_LSHOULDER\_BTN - 0x09
-\item XBOX\_RSHOULDER\_BTN - 0x0a
-\item XBOX\_BACK\_BTN - 0x0b
-\item XBOX\_START\_BTN - 0x0c
-\item XBOX\_LEFTBTN - 0x0d
-\item XBOX\_RIGHTBTN - 0x0e
-\item XBOX\_DPAD - 0x0f
-\end{itemize}
-
-\newpage
-
-\subsection{Logitech Gamepad on OS X DS}
-
-\begin{itemize}
-\item LOGITECH\_RIGHTY\_MAC - 0x0f
-\item LOGITECH\_RIGHTX\_MAC - 0x0e
-\item LOGITECH\_LEFTY\_MAC - 0x0d
-\item LOGITECH\_LEFTX\_MAC - 0x0c
-\item LOGITECH\_DPAD\_MAC - 0x10
-\item LOGITECH\_BTN1\_MAC - 0x00
-\item LOGITECH\_BTN2\_MAC - 0x01
-\item LOGITECH\_BTN3\_MAC - 0x02
-\item LOGITECH\_BTN4\_MAC - 0x03
-\item LOGITECH\_BTN5\_MAC - 0x04
-\item LOGITECH\_BTN6\_MAC - 0x05
-\item LOGITECH\_BTN7\_MAC - 0x06
-\item LOGITECH\_BTN8\_MAC - 0x07
-\item LOGITECH\_BTN9\_MAC - 0x08
-\item LOGITECH\_BTN10\_MAC - 0x09
-\item LOGITECH\_LEFTBTN\_MAC - 0x0a
-\item LOGITECH\_RIGHTBTN\_MAC - 0x0b
+\item ANALOG\_LEFTX - 0x00
+\item ANALOG\_LEFTY - 0x01
+\item ANALOG\_RIGHTX - 0x02
+\item ANALOG\_RIGHTY - 0x03
+\item LEFT\_ANALOG\_BTN\_DPAD - 0x04
+\item RIGHT\_ANALOG\_BTN\_DPAD - 0x05
+\item DPAD - 0x06
+\item BTN1 - 0x07
+\item BTN2 - 0x08
+\item BTN3 - 0x09
+\item BTN4 - 0x0a
+\item BTN5 - 0x0b
+\item BTN6 - 0x0c
+\item BTN7 - 0x0d
+\item BTN8 - 0x0e
+\item BTN9 - 0x0f
+\item BTN10 - 0x10
 \end{itemize}
 
 \newpage
