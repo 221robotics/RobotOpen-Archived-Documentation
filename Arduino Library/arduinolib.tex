@@ -88,9 +88,9 @@ This function notifies RobotOpen that all of the robot code has finished executi
 \textbf{int value}: The PWM value to set. Use a joystick makePWM function here or manually pass a value between 0-255.\\
 \textbf{Returns: void}\\\\
 This function sets a motor or PWM value on a specific PWM output of the digital sidecar.
-\subsection{RobotOpen::setRelay(int relayChannel, int value)}
+\subsection{RobotOpen::setRelay(int relayChannel, boolean value)}
 \textbf{int relayChannel}: The relay output to set. See the Constants section near the end of this document for possible values. Example: RELAY\_3.\\
-\textbf{int value}: The relay value to set. Possible values here are either ON or OFF.\\
+\textbf{boolean value}: Set the relay on or off. HIGH for ON, LOW for OFF.\\
 \textbf{Returns: void}\\\\
 This function sets a motor or PWM value on a specific PWM output of the digital sidecar.
 \subsection{RobotOpen::enabled()}
