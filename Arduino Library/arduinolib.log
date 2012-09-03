@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012) (format=pdflatex 2012.6.30)  25 AUG 2012 11:14
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012) (format=pdflatex 2012.6.30)  3 SEP 2012 00:01
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -610,6 +610,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 92--96
  []
 
 
+Overfull \hbox (0.89642pt too wide) in paragraph at lines 92--96
+\T1/fca/m/n/10.95 This func-tion sets a solenoid out-put to ei-ther ON or OFF. 
+NOTE: You must be us-ing the RobotOpen
+ []
+
+
 Underfull \hbox (badness 10000) in paragraph at lines 97--99
 
  []
@@ -736,7 +742,7 @@ c}</usr/local/texlive/2012/texmf-dist/fonts/type1/public/cantarell/Cantarell-Bo
 ld.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/public/cantarell/Cantare
 ll-Regular.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/
 cm/cmsy10.pfb>
-Output written on arduinolib.pdf (11 pages, 63523 bytes).
+Output written on arduinolib.pdf (11 pages, 63624 bytes).
 PDF statistics:
  61 PDF objects out of 1000 (max. 8388607)
  42 compressed objects within 1 object stream

@@ -88,11 +88,11 @@ This function notifies RobotOpen that all of the robot code has finished executi
 \textbf{int value}: The PWM value to set. Use a joystick makePWM function here or manually pass a value between 0-255.\\
 \textbf{Returns: void}\\\\
 This function sets a motor or PWM value on a specific PWM output of the digital sidecar.
-\subsection{RobotOpen::setRelay(int relayChannel, boolean value)}
-\textbf{int relayChannel}: The relay output to set. See the Constants section near the end of this document for possible values. Example: RELAY\_3.\\
-\textbf{boolean value}: Set the relay on or off. HIGH for ON, LOW for OFF.\\
+\subsection{RobotOpen::setSolenoid(int solenoidChannel, boolean value)}
+\textbf{int solenoidChannel}: The solenoid output to set. See the Constants section near the end of this document for possible values. Example: SOLENOID\_3.\\
+\textbf{boolean value}: Set the solenoid on or off. HIGH for ON, LOW for OFF.\\
 \textbf{Returns: void}\\\\
-This function sets a motor or PWM value on a specific PWM output of the digital sidecar.
+This function sets a solenoid output to either ON or OFF. NOTE: You must be using the RobotOpen Solenoid Shield.
 \subsection{RobotOpen::enabled()}
 \textbf{Returns: boolean}\\\\
 This will return to you a boolean of the current state of the robot. True corresponds to enabled. False corresponds to disabled.
@@ -198,19 +198,19 @@ This function will return true if the specified d-pad direction is being pressed
 
 \newpage
 
-\subsection{Relay Outputs}
+\subsection{Solenoid Outputs}
 
 \begin{itemize}
-\item RELAY\_1 - 0x01
-\item RELAY\_2 - 0x02
-\item RELAY\_3 - 0x03
-\item RELAY\_4 - 0x04
-\item RELAY\_5 - 0x05
-\item RELAY\_6 - 0x06
-\item RELAY\_7 - 0x07
-\item RELAY\_8 - 0x08
-\item RELAY\_9 - 0x09
-\item RELAY\_10 - 0x0a
+\item SOLENOID\_1 - 0x01
+\item SOLENOID\_2 - 0x02
+\item SOLENOID\_3 - 0x03
+\item SOLENOID\_4 - 0x04
+\item SOLENOID\_5 - 0x05
+\item SOLENOID\_6 - 0x06
+\item SOLENOID\_7 - 0x07
+\item SOLENOID\_8 - 0x08
+\item SOLENOID\_9 - 0x09
+\item SOLENOID\_10 - 0x0a
 \end{itemize}
 
 \newpage
